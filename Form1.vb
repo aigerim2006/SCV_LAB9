@@ -39,4 +39,10 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
+    Public Class DiseaseRecord
+        Public Property userId As Integer
+        Public Property id As Integer
+        Public Property title As String
+        Public Property body As String
+    End Class
 End Class
