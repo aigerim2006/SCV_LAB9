@@ -4,7 +4,7 @@ Imports System.Text.Json
 Public Class Form1
 
     ' 1. Функция получения данных (оставляем как есть)
-    Public Async Function GetDataFromServerAsync() As Task(Of List(Of DiseaseRecord))
+    Public Async Function GetDataFromServerAsync() As Task(Of List(Of Class1))
         Using client As New HttpClient()
             Try
                 Dim url As String = "https://jsonplaceholder.typicode.com/posts"
@@ -13,17 +13,15 @@ Public Class Form1
                 If response.IsSuccessStatusCode Then
                     Dim jsonResponse As String = Await response.Content.ReadAsStringAsync()
                     Dim options As New JsonSerializerOptions With {.PropertyNameCaseInsensitive = True}
-                    Return JsonSerializer.Deserialize(Of List(Of DiseaseRecord))(jsonResponse, options)
+                    Return JsonSerializer.Deserialize(Of List(Of Class1))(jsonResponse, options)
                 End If
             Catch ex As Exception
                 MessageBox.Show("Ошибка сетевого соединения: " & ex.Message)
             End Try
         End Using
-        Return New List(Of DiseaseRecord)()
+        Return New List(Of Class1)()
     End Function
 
-    ' 2. ИСПРАВЛЕННЫЙ ОБРАБОТЧИК КЛИКА
-    ' Мы привязали его к Button1 (стандартное имя кнопки)
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         ' Вызываем функцию
         Dim diseases = Await GetDataFromServerAsync()
@@ -39,10 +37,5 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
-    Public Class DiseaseRecord
-        Public Property userId As Integer
-        Public Property id As Integer
-        Public Property title As String
-        Public Property body As String
-    End Class
+
 End Class
